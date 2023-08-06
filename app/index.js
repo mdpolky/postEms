@@ -1,19 +1,46 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { StyleSheet, Text, View, Pressable, TextInput } from "react-native";
+import { useState, useReducer } from "react";
+import {
+  Button,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 function Note() {
+  const [noteText, onChangeNoteText] = useState(
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi tristique senectus et netus et. Sit amet luctus venenatis lectus magna fringilla urna."
+  );
+  const [isEditable, setIsEditable] = useReducer(
+    (editable) => !editable,
+    false
+  );
   return (
     <View style={styles.noteContainer}>
-      <Text style={styles.noteText}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Morbi tristique
-        senectus et netus et. Sit amet luctus venenatis lectus magna fringilla
-        urna.
-      </Text>
+      {isEditable ? (
+        <TextInput
+          style={styles.noteText}
+          multiline={true}
+          onChangeText={onChangeNoteText}
+          value={noteText}
+        >
+          {noteText}
+        </TextInput>
+      ) : (
+        <Text style={styles.noteText}>{noteText}</Text>
+      )}
+
       <View style={styles.noteFooter}>
-        <Text style={styles.noteDate}>August 4, 2023</Text>
-        <Pressable style={styles.editNoteButton}>
+        <Text style={styles.noteDate}>August 5, 2023</Text>
+
+        <Pressable
+          style={styles.editNoteButton}
+          onPress={() => {
+            setIsEditable(true);
+          }}
+        >
           <Text>Edit</Text>
         </Pressable>
       </View>
@@ -38,18 +65,16 @@ export default function App() {
           placeholder="Search"
           value={searchText}
         />
-        <Text>Notes</Text>
+        <Text style={styles.noteTitle}>Notes</Text>
         <View style={styles.notesContainer}>
           <Note />
           <Note />
           <Note />
           <Note />
-
           <Note />
           <Note />
         </View>
       </View>
-
       <StatusBar style="auto" />
     </View>
   );
@@ -74,6 +99,7 @@ const styles = StyleSheet.create({
     flex: 9,
     padding: 10,
     marginLeft: 20,
+    marginRight: 20,
   },
   searchInput: { marginBottom: 20 },
   notesContainer: {
@@ -81,6 +107,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 20,
   },
+  noteTitle: { fontSize: 36, fontWeight: 600 },
   noteContainer: {
     flex: 1,
     padding: 10,
@@ -90,11 +117,15 @@ const styles = StyleSheet.create({
     backgroundColor: "blanchedalmond",
     borderColor: "blanchedalmond",
     borderRadius: 10,
+    justifyContent: "flex-end",
   },
   noteText: {
     fontSize: 20,
   },
-  noteFooter: { flexDirection: "row", justifyContent: "space-between" },
+  noteFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   noteDate: {},
   noteEditButton: {},
 });
