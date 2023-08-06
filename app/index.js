@@ -13,7 +13,9 @@ function Note() {
       </Text>
       <View style={styles.noteFooter}>
         <Text style={styles.noteDate}>August 4, 2023</Text>
-        <Pressable style={styles.editNoteButton}>Edit</Pressable>
+        <Pressable style={styles.editNoteButton}>
+          <Text>Edit</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -26,7 +28,7 @@ export default function App() {
       <View style={styles.leftRail}>
         <Text style={styles.logo}>Post-ems</Text>
         <Pressable style={styles.addNoteButton}>
-          <Text>Add</Text>
+          <Text>Add Note</Text>
         </Pressable>
       </View>
       <View style={styles.mainContainer}>
