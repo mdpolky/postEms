@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { v4 as uuidv4 } from "uuid";
 
 function Note({ data, dispatch }) {
@@ -38,20 +39,24 @@ function Note({ data, dispatch }) {
       <View style={styles.noteFooter}>
         <Text style={styles.noteDate}>{noteDate}</Text>
         <Pressable
-          style={styles.noteDeleteButton}
-          onPress={() => {
-            dispatch({ type: "removed_note", id: data.id });
-          }}
-        >
-          <Text>Remove</Text>
-        </Pressable>
-        <Pressable
           style={styles.noteEditButton}
           onPress={() => {
             setIsEditable(true);
           }}
         >
-          <Text>{isEditable ? "Save" : "Edit"}</Text>
+          {isEditable ? (
+            <AntDesign name="save" size={24} color="black" />
+          ) : (
+            <AntDesign name="edit" size={24} color="black" />
+          )}
+        </Pressable>
+        <Pressable
+          style={styles.noteDeleteButton}
+          onPress={() => {
+            dispatch({ type: "removed_note", id: data.id });
+          }}
+        >
+          <AntDesign name="close" size={24} color="black" />
         </Pressable>
       </View>
     </View>
@@ -101,6 +106,7 @@ const initialNotes = [
 export default function App() {
   const [searchText, onChangeSearchText] = useState("");
   const [notes, notesDispatch] = useReducer(notesReducer, initialNotes);
+
   return (
     <View style={styles.container}>
       <View style={styles.leftRail}>
@@ -111,7 +117,12 @@ export default function App() {
             notesDispatch({ type: "added_note" });
           }}
         >
-          <Text>Add Note</Text>
+          <AntDesign
+            style={styles.addNoteButtonIcon}
+            name="pluscircle"
+            size={32}
+            color="green"
+          />
         </Pressable>
       </View>
       <View style={styles.mainContainer}>
@@ -123,9 +134,13 @@ export default function App() {
         />
         <Text style={styles.noteTitle}>Notes</Text>
         <View style={styles.notesContainer}>
-          {notes.map((note) => {
-            return <Note key={note.id} data={note} dispatch={notesDispatch} />;
-          })}
+          {notes
+            .filter((note) => note.text.includes(searchText))
+            .map((note) => {
+              return (
+                <Note key={note.id} data={note} dispatch={notesDispatch} />
+              );
+            })}
         </View>
       </View>
       <StatusBar style="auto" />
@@ -134,9 +149,9 @@ export default function App() {
 }
 
 //noteTextHeight+noteFooterHeight should add up to noteSize
-const noteSize = "300px";
-const noteTextHeight = "250px";
-const noteFooterHeight = "50px";
+const noteSize = 300;
+const noteTextHeight = 250;
+const noteFooterHeight = 50;
 
 const styles = StyleSheet.create({
   container: {
@@ -153,6 +168,7 @@ const styles = StyleSheet.create({
   },
   logo: { marginBottom: 20, fontWeight: 700 },
   addNoteButton: {},
+  addNoteButtonIcon: {},
   mainContainer: {
     flex: 9,
     padding: 10,
