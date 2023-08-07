@@ -110,37 +110,37 @@ const initialNotes = [
     id: "a4f928b1-bfbf-4db4-96e3-86565198d1d0",
     date: "2023-08-05",
     text: "first note",
-    color: "tomato",
+    color: "#ffbdda",
   },
   {
     id: "2d7124fb-9713-4365-859d-947dd435a5c9",
     date: "2023-08-05",
     text: "second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second note second notesecond note",
-    color: "peachpuff",
+    color: "#ffd493",
   },
   {
     id: "b0134106-c106-447d-b7d7-5cf116c9d6b9",
     date: "2023-08-03",
     text: "3rd note",
-    color: "blanchedalmond",
+    color: "#ffffad",
   },
   {
     id: "23bc2661-3d71-4b40-abfd-c8d740ad2dc0",
     date: "2023-08-02",
     text: "4th note",
-    color: "yellowgreen",
+    color: "#c1f0b2",
   },
   {
     id: "595f7dba-74a8-4108-9800-3c3f9216268f",
     date: "2023-08-01",
     text: "fifth note",
-    color: "powderblue",
+    color: "#9affff",
   },
   {
     id: "2b5141b9-cf2d-4346-b3cc-60165e48d352",
     date: "2023-08-01",
     text: "This is the sixth thing",
-    color: "rebeccapurple",
+    color: "#a9bcff",
   },
 ];
 
@@ -152,7 +152,23 @@ function FabAction({ color, dispatch }) {
         dispatch({ type: "added_note", color: color });
       }}
     >
-      <View style={[styles.fabItem, { backgroundColor: color }]}></View>
+      <Motion.View
+        style={[styles.fabItem, { backgroundColor: color }]}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}
+        transition={{
+          default: {
+            type: "spring",
+            damping: 20,
+            stiffness: 300,
+          },
+          opacity: {
+            type: "tween",
+            duration: 300,
+          },
+        }}
+      ></Motion.View>
     </Pressable>
   );
 }
@@ -162,13 +178,14 @@ export default function App() {
   const [notes, notesDispatch] = useReducer(notesReducer, initialNotes);
   const [isShownFab, setIsShownFab] = useReducer((hidden) => !hidden, false);
   const fabActions = [
-    "tomato",
-    "peachpuff",
-    "blanchedalmond",
-    "yellowgreen",
-    "powderblue",
-    "rebeccapurple",
+    "#ffbdda",
+    "#ffd493",
+    "#ffffad",
+    "#c1f0b2",
+    "#9affff",
+    "#a9bcff",
   ];
+
   return (
     <View style={styles.container}>
       <View style={styles.leftRail}>
@@ -183,7 +200,13 @@ export default function App() {
             />
           </Pressable>
           {isShownFab && (
-            <View style={styles.fabItems}>
+            <Motion.View
+              style={styles.fabItems}
+              transition={{
+                delayChildren: 0.3,
+                staggerChildren: 0.2,
+              }}
+            >
               {fabActions.map((color) => {
                 return (
                   <FabAction
@@ -193,7 +216,7 @@ export default function App() {
                   />
                 );
               })}
-            </View>
+            </Motion.View>
           )}
         </View>
       </View>
@@ -204,8 +227,7 @@ export default function App() {
           placeholder="Search"
           value={searchText}
         />
-        <Text style={styles.noteTitle}>Notes</Text>
-
+        <Text style={styles.noteContainerTitle}>Notes</Text>
         <View style={styles.notesContainer}>
           <AnimatePresence>
             {notes
@@ -254,24 +276,27 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   searchInput: { marginBottom: 20 },
+  noteContainerTitle: {
+    fontSize: 36,
+    fontWeight: 600,
+    lineHeight: 24,
+    marginBottom: 20,
+  },
   notesContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  noteTitle: { fontSize: 36, fontWeight: 600, marginBottom: 20 },
   noteContainer: {
     flex: 1,
     flexShrink: 1,
     padding: 10,
     marginRight: 20,
     marginBottom: 20,
-    borderWidth: "1px",
     minHeight: noteSize,
     maxHeight: noteSize,
     minWidth: noteSize,
     maxWidth: noteSize,
-    backgroundColor: "blanchedalmond",
-    borderColor: "blanchedalmond",
+    backgroundColor: "#ffffad",
     borderRadius: 10,
     justifyContent: "space-between",
   },
