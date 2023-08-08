@@ -106,11 +106,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "space-between",
   },
-  noteContainerTitle: {
-    fontSize: 36,
-    fontWeight: 600,
-    marginBottom: 20,
-  },
   noteText: {
     fontSize: 20,
   },

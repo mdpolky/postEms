@@ -72,6 +72,6 @@ export function Fab({ dispatch }) {
 }
 
 const styles = StyleSheet.create({
-  fabContainer: { alignItems: "center", marginTop: 25 },
+  fabContainer: { alignItems: "center" },
   fabItem: { borderRadius: "50%", height: 25, width: 25 },
 });

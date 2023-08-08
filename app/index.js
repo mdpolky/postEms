@@ -125,6 +125,11 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   searchInput: { marginBottom: 20 },
+  noteContainerTitle: {
+    fontSize: 36,
+    fontWeight: 600,
+    marginBottom: 20,
+  },
   notesContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
