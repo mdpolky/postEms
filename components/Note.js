@@ -12,14 +12,24 @@ import { Motion } from "@legendapp/motion";
 
 export function Note({ data, dispatch }) {
   const [noteText, onChangeNoteText] = useState(data.text);
-  const noteDate = data.date; //TODO: update should change NoteDate as well
+  const originalNote = data.text;
+  const [noteDate, setNoteDate] = useState(data.date);
   const [isEditable, toggleIsEditable] = useReducer(
     (editable) => !editable,
     false
   );
   const updateNote = () => {
+    const updatedDate = new Date().toLocaleString();
     toggleIsEditable();
-    dispatch({ type: "updated_note", id: data.id, text: noteText });
+    if (originalNote !== noteText) {
+      setNoteDate(updatedDate);
+      dispatch({
+        type: "updated_note",
+        id: data.id,
+        text: noteText,
+        date: updatedDate,
+      });
+    }
   };
   const noteContainerStyle = data.color
     ? [styles.noteContainer, { backgroundColor: data.color }]
@@ -98,8 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexShrink: 1,
     padding: 10,
-    marginRight: 20,
-    marginBottom: 20,
     minHeight: noteSize,
     maxHeight: noteSize,
     minWidth: noteSize,

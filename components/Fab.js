@@ -89,5 +89,4 @@ const iosStyles = StyleSheet.create({
   fabAction: { borderRadius: "50%", height: 25, width: 25 },
 });
 
-const styles =
-  Platform.OS === "ios" ? Object.assign(baseStyles, iosStyles) : baseStyles;
+const styles = Platform.OS === "ios" ? iosStyles : baseStyles;
