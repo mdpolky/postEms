@@ -93,7 +93,6 @@ export default function App() {
             <Fab dispatch={notesDispatch} />
           </View>
         )}
-        {/* TODO: center on mobile */}
         <View style={styles.mainContainer}>
           <ScrollView>
             <TextInput
