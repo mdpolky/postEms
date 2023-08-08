@@ -77,7 +77,7 @@ export function Note({ data, dispatch }) {
             style={styles.noteDeleteIcon}
             name="close"
             size={24}
-            color="black"
+            color="#708090"
           />
         </Pressable>
       </View>
@@ -93,7 +93,7 @@ export function Note({ data, dispatch }) {
           <AntDesign
             name={isEditable ? "save" : "edit"}
             size={24}
-            color="black"
+            color="white"
           />
         </Pressable>
       </View>
@@ -123,14 +123,24 @@ const styles = StyleSheet.create({
   },
   noteText: {
     fontSize: 20,
+    color: "#708090",
   },
   noteTextInput: {
     height: noteTextHeight,
+  },
+  noteEditButton: {
+    backgroundColor: "#708090",
+    borderRadius: "50%",
+    padding: 10,
   },
   noteFooter: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     height: noteFooterHeight,
+  },
+  noteDate: {
+    color: "#708090",
+    fontWeight: "100",
   },
 });

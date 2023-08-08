@@ -50,8 +50,8 @@ export function Fab({ dispatch }) {
         <AntDesign
           style={styles.addNoteButtonIcon}
           name="pluscircle"
-          size={32}
-          color="slategray"
+          size={50}
+          color="#708090"
         />
       </Pressable>
       {isShownFab && (
@@ -74,7 +74,7 @@ export function Fab({ dispatch }) {
 const baseStyles = StyleSheet.create({
   fabContainer: { alignItems: "center" },
   addNoteButton: { marginBottom: 10 },
-  fabItems: { gap: 10 },
+  fabItems: { gap: 20 },
   fabActionPressable: { alignItems: "center" },
   fabAction: { borderRadius: "50%", height: 25, width: 25 },
 });
