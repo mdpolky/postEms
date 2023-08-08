@@ -12,14 +12,13 @@ const fabItemColors = [
   "#a9bcff",
 ];
 
-export function FabAction({ color, dispatch }) {
+export function FabAction({ color, dispatch, hideFabFn }) {
+  const addNote = () => {
+    hideFabFn();
+    dispatch({ type: "added_note", color: color });
+  };
   return (
-    <Pressable
-      style={styles.fabActionPressable}
-      onPress={() => {
-        dispatch({ type: "added_note", color: color });
-      }}
-    >
+    <Pressable style={styles.fabActionPressable} onPress={addNote}>
       <Motion.View
         style={[styles.fabAction, { backgroundColor: color }]}
         initial={{ opacity: 0, scale: 0 }}
@@ -63,7 +62,14 @@ export function Fab({ dispatch }) {
           }}
         >
           {fabItemColors.map((color) => {
-            return <FabAction key={color} color={color} dispatch={dispatch} />;
+            return (
+              <FabAction
+                key={color}
+                color={color}
+                dispatch={dispatch}
+                hideFabFn={setIsShownFab}
+              />
+            );
           })}
         </Motion.View>
       )}
