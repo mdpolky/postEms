@@ -54,18 +54,33 @@ export function Note({ data, dispatch }) {
       }}
       layout={{ duration: 2.0 }}
     >
-      {isEditable ? (
-        <TextInput
-          style={[styles.noteText, styles.noteTextInput]}
-          multiline={true}
-          onChangeText={onChangeNoteText}
-          value={noteText}
-        />
-      ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.noteText}>{noteText}</Text>
-        </ScrollView>
-      )}
+      <View style={styles.noteContent}>
+        {isEditable ? (
+          <TextInput
+            style={[styles.noteText, styles.noteTextInput]}
+            multiline={true}
+            onChangeText={onChangeNoteText}
+            value={noteText}
+          />
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Text style={styles.noteText}>{noteText}</Text>
+          </ScrollView>
+        )}
+        <Pressable
+          style={styles.noteDeleteButton}
+          onPress={() => {
+            dispatch({ type: "removed_note", id: data.id });
+          }}
+        >
+          <AntDesign
+            style={styles.noteDeleteIcon}
+            name="close"
+            size={24}
+            color="black"
+          />
+        </Pressable>
+      </View>
 
       <View style={styles.noteFooter}>
         <Text style={styles.noteDate}>{noteDate}</Text>
@@ -81,19 +96,6 @@ export function Note({ data, dispatch }) {
             color="black"
           />
         </Pressable>
-        <Pressable
-          style={styles.noteDeleteButton}
-          onPress={() => {
-            dispatch({ type: "removed_note", id: data.id });
-          }}
-        >
-          <AntDesign
-            style={styles.noteDeleteIcon}
-            name="close"
-            size={24}
-            color="black"
-          />
-        </Pressable>
       </View>
     </Motion.View>
   );
@@ -105,8 +107,6 @@ const noteTextHeight = 250;
 const noteFooterHeight = 50;
 const styles = StyleSheet.create({
   noteContainer: {
-    flex: 1,
-    flexShrink: 1,
     padding: 10,
     minHeight: noteSize,
     maxHeight: noteSize,
@@ -114,6 +114,11 @@ const styles = StyleSheet.create({
     maxWidth: noteSize,
     backgroundColor: "#ffffad",
     borderRadius: 10,
+    justifyContent: "space-between",
+  },
+  noteContent: {
+    flexDirection: "row",
+    flex: 1,
     justifyContent: "space-between",
   },
   noteText: {
@@ -128,8 +133,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: noteFooterHeight,
   },
-  noteDate: {},
-  noteDeleteButton: {},
-  noteDeleteIcon: {},
-  noteEditButton: {},
 });

@@ -59,7 +59,7 @@ function notesReducer(state, action) {
       return [
         {
           id: Crypto.randomUUID(),
-          date: "2023-08-06", //TODO: get todays date
+          date: new Date().toLocaleString(),
           text: "",
           color: action.color,
         },
