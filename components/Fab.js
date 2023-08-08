@@ -15,13 +15,13 @@ const fabItemColors = [
 export function FabAction({ color, dispatch }) {
   return (
     <Pressable
-      style={styles.fabContainer}
+      style={styles.fabActionPressable}
       onPress={() => {
         dispatch({ type: "added_note", color: color });
       }}
     >
       <Motion.View
-        style={[styles.fabItem, { backgroundColor: color }]}
+        style={[styles.fabAction, { backgroundColor: color }]}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0 }}
@@ -73,5 +73,8 @@ export function Fab({ dispatch }) {
 
 const styles = StyleSheet.create({
   fabContainer: { alignItems: "center" },
-  fabItem: { borderRadius: "50%", height: 25, width: 25 },
+  addNoteButton: { marginBottom: 10 },
+  fabItems: { gap: 10 },
+  fabActionPressable: { alignItems: "center" },
+  fabAction: { borderRadius: "50%", height: 25, width: 25 },
 });

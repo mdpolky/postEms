@@ -1,16 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { useReducer, useState } from "react";
 import {
-  Pressable,
-  ScrollView,
+  Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
-import { v4 as uuidv4 } from "uuid";
-import { AnimatePresence, Motion } from "@legendapp/motion";
+import * as Crypto from "expo-crypto";
+import { AnimatePresence } from "@legendapp/motion";
 import { Note } from "../components/Note";
 import { Fab } from "../components/Fab";
 
@@ -57,7 +57,12 @@ function notesReducer(state, action) {
   switch (action.type) {
     case "added_note": {
       return [
-        { id: uuidv4(), date: "2023-08-06", text: "", color: action.color },
+        {
+          id: Crypto.randomUUID(),
+          date: "2023-08-06", //TODO: get todays date
+          text: "",
+          color: action.color,
+        },
         ...state,
       ];
     }
@@ -74,29 +79,41 @@ export default function App() {
   const [notes, notesDispatch] = useReducer(notesReducer, initialNotes);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.leftRail}>
-        <Text style={styles.logo}>Post-ems</Text>
-        <Fab dispatch={notesDispatch} />
-      </View>
-      <View style={styles.mainContainer}>
-        <TextInput
-          style={styles.searchInput}
-          onChangeText={onChangeSearchText}
-          placeholder="Search"
-          value={searchText}
-        />
-        <Text style={styles.noteContainerTitle}>Notes</Text>
-        <View style={styles.notesContainer}>
-          <AnimatePresence>
-            {notes
-              .filter((note) => note.text.includes(searchText))
-              .map((note) => {
-                return (
-                  <Note key={note.id} data={note} dispatch={notesDispatch} />
-                );
-              })}
-          </AnimatePresence>
+    <SafeAreaView style={styles.safeContainer}>
+      <View style={styles.container}>
+        {Platform.OS === "web" && (
+          <View style={styles.leftRail}>
+            <Text style={styles.logo}>Post-ems</Text>
+            <Fab dispatch={notesDispatch} />
+          </View>
+        )}
+        {/* TODO: center on mobile */}
+        <View style={styles.mainContainer}>
+          <ScrollView>
+            <TextInput
+              style={styles.searchInput}
+              onChangeText={onChangeSearchText}
+              placeholder="Search"
+              value={searchText}
+            />
+            <Text style={styles.noteContainerTitle}>Notes</Text>
+            <View style={styles.notesContainer}>
+              {/* TODO: make filter case-insensitive */}
+              <AnimatePresence>
+                {notes
+                  .filter((note) => note.text.includes(searchText))
+                  .map((note) => {
+                    return (
+                      <Note
+                        key={note.id}
+                        data={note}
+                        dispatch={notesDispatch}
+                      />
+                    );
+                  })}
+              </AnimatePresence>
+            </View>
+          </ScrollView>
         </View>
       </View>
       <StatusBar style="auto" />
@@ -105,9 +122,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  safeContainer: { flex: 1, backgroundColor: "#faf8f6" },
   container: {
-    backgroundColor: "aliceblue",
-    height: "100%",
+    flex: 1,
     flexDirection: "row",
   },
   leftRail: {
