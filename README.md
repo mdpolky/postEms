@@ -13,6 +13,8 @@ npm install
 npx expo start
 ```
 
+Or try this [snack](https://snack.expo.dev/@mdpolky/postems) to play around with the iOS version of the app
+
 ## additional iOS screenshot (as of: 8/8/23)
 
 ![Screenshot of ios app](/docs/images/postems-ios-screenshot-8-8.PNG "iOS version")
