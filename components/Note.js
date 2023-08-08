@@ -12,11 +12,15 @@ import { Motion } from "@legendapp/motion";
 
 export function Note({ data, dispatch }) {
   const [noteText, onChangeNoteText] = useState(data.text);
-  const [noteDate, setNoteDate] = useState(data.date); //TODO: onChangeNoteText should change NoteDate as well
-  const [isEditable, setIsEditable] = useReducer(
+  const noteDate = data.date; //TODO: update should change NoteDate as well
+  const [isEditable, toggleIsEditable] = useReducer(
     (editable) => !editable,
     false
   );
+  const updateNote = () => {
+    toggleIsEditable();
+    dispatch({ type: "updated_note", id: data.id, text: noteText });
+  };
   const noteContainerStyle = data.color
     ? [styles.noteContainer, { backgroundColor: data.color }]
     : styles.noteContainer;
@@ -60,14 +64,14 @@ export function Note({ data, dispatch }) {
         <Pressable
           style={styles.noteEditButton}
           onPress={() => {
-            setIsEditable(true);
+            isEditable ? updateNote() : toggleIsEditable();
           }}
         >
-          {isEditable ? (
-            <AntDesign name="save" size={24} color="black" />
-          ) : (
-            <AntDesign name="edit" size={24} color="black" />
-          )}
+          <AntDesign
+            name={isEditable ? "save" : "edit"}
+            size={24}
+            color="black"
+          />
         </Pressable>
         <Pressable
           style={styles.noteDeleteButton}

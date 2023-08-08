@@ -66,6 +66,12 @@ function notesReducer(state, action) {
         ...state,
       ];
     }
+    case "updated_note": {
+      const index = state.findIndex((note) => note.id === action.id);
+      const newArray = [...state];
+      newArray[index].text = action.text;
+      return newArray;
+    }
     case "removed_note": {
       return state.filter((note) => note.id !== action.id);
     }
