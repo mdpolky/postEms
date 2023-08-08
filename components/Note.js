@@ -50,9 +50,7 @@ export function Note({ data, dispatch }) {
           multiline={true}
           onChangeText={onChangeNoteText}
           value={noteText}
-        >
-          {noteText}
-        </TextInput>
+        />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.noteText}>{noteText}</Text>
