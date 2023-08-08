@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { Motion } from "@legendapp/motion";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -71,10 +71,23 @@ export function Fab({ dispatch }) {
   );
 }
 
-const styles = StyleSheet.create({
+const baseStyles = StyleSheet.create({
   fabContainer: { alignItems: "center" },
   addNoteButton: { marginBottom: 10 },
   fabItems: { gap: 10 },
   fabActionPressable: { alignItems: "center" },
   fabAction: { borderRadius: "50%", height: 25, width: 25 },
 });
+
+const iosStyles = StyleSheet.create({
+  fabContainer: {
+    flexDirection: "row-reverse",
+  },
+  addNoteButton: { marginLeft: 20, marginRight: 20 },
+  fabItems: { flexDirection: "row-reverse", gap: 20, alignItems: "center" },
+  fabActionPressable: {},
+  fabAction: { borderRadius: "50%", height: 25, width: 25 },
+});
+
+const styles =
+  Platform.OS === "ios" ? Object.assign(baseStyles, iosStyles) : baseStyles;

@@ -122,6 +122,11 @@ export default function App() {
           </ScrollView>
         </View>
       </View>
+      {Platform.OS === "ios" && (
+        <View style={styles.mobileFooter}>
+          <Fab dispatch={notesDispatch} />
+        </View>
+      )}
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -156,5 +161,8 @@ const styles = StyleSheet.create({
   notesContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  mobileFooter: {
+    height: 50,
   },
 });
