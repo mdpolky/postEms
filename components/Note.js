@@ -19,9 +19,9 @@ export function Note({ data, dispatch }) {
     false
   );
   const updateNote = () => {
-    const updatedDate = new Date().toLocaleString();
     toggleIsEditable();
     if (originalNote !== noteText) {
+      const updatedDate = new Date().toLocaleString();
       setNoteDate(updatedDate);
       dispatch({
         type: "updated_note",
@@ -34,6 +34,7 @@ export function Note({ data, dispatch }) {
   const noteContainerStyle = data.color
     ? [styles.noteContainer, { backgroundColor: data.color }]
     : styles.noteContainer;
+
   return (
     <Motion.View
       key={data.id}
@@ -57,6 +58,7 @@ export function Note({ data, dispatch }) {
       <View style={styles.noteContent}>
         {isEditable ? (
           <TextInput
+            autoFocus={true}
             style={[styles.noteText, styles.noteTextInput]}
             multiline={true}
             onChangeText={onChangeNoteText}

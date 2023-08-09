@@ -17,6 +17,5 @@ test("note shows text in a text component when loaded", () => {
   render(<Note data={noteMock} dispatch={mockFn} />);
 
   const noteText = screen.getByText("This is the text property of a note");
-
   expect(noteText).toBeTruthy();
 });
